@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a5f4a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="description" content="Тренажёр формул по физике: тест A–D и справочник" />
+  <title>Формулы по физике</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Главное меню -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu">
+      <p class="menu-eyebrow">Справочник и тест</p>
+      <h1 class="menu-title">Формулы<br />по физике</h1>
+      <p class="menu-sub">Вопросы A–D со случайным порядком ответов. Можно выбрать темы.</p>
+      <div class="menu-actions">
+        <button type="button" class="btn btn-primary" id="btn-start">Начать</button>
+        <button type="button" class="btn btn-ghost" id="btn-list">Все формулы (102)</button>
+        <button type="button" class="btn btn-ghost" id="btn-equiv">Эквивалентные формулы</button>
+        <button type="button" class="btn btn-ghost" id="btn-const">Постоянные</button>
+      </div>
+      <p class="menu-count" id="menu-count"></p>
+    </div>
+  </section>
+
+  <!-- Режим выбора тем -->
+  <section id="screen-mode" class="screen">
+    <header class="topbar">
+      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
+      <h2 class="topbar-title">Как начать тест?</h2>
+      <span class="topbar-spacer"></span>
+    </header>
+    <div class="menu mode-menu">
+      <div class="menu-actions">
+        <button type="button" class="btn btn-primary" id="btn-mode-one">Выбрать одну тему</button>
+        <button type="button" class="btn btn-ghost" id="btn-mode-all">Все темы</button>
+        <button type="button" class="btn btn-ghost" id="btn-mode-multi">Выбор нескольких тем</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Выбор тем -->
+  <section id="screen-topics" class="screen">
+    <header class="topbar">
+      <button type="button" class="btn-back" data-go="mode" aria-label="Назад">←</button>
+      <h2 class="topbar-title" id="topics-title">Темы</h2>
+      <span class="topbar-spacer"></span>
+    </header>
+    <div class="topics-wrap">
+      <p class="topics-hint" id="topics-hint"></p>
+      <div class="topics-list" id="topics-list"></div>
+      <button type="button" class="btn btn-primary topics-go" id="btn-topics-go" hidden>Начать тест</button>
+    </div>
+  </section>
+
+  <!-- Список основных формул -->
+  <section id="screen-list" class="screen">
+    <header class="topbar">
+      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
+      <h2 class="topbar-title">Все формулы</h2>
+      <span class="topbar-spacer"></span>
+    </header>
+    <div class="list-wrap">
+      <h1 class="list-main-title">Общая таблица формул по физике</h1>
+      <div id="formulas-list"></div>
+    </div>
+  </section>
+
+  <!-- Эквиваленты -->
+  <section id="screen-equiv" class="screen">
+    <header class="topbar">
+      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
+      <h2 class="topbar-title">Эквиваленты</h2>
+      <span class="topbar-spacer"></span>
+    </header>
+    <div class="list-wrap">
+      <h1 class="list-main-title">Равнозначные преобразования</h1>
+      <p class="list-note">Формулы вида «из F = ma → a = F/m», которые убрали из основных 102, чтобы не дублировать.</p>
+      <div id="equiv-list"></div>
+    </div>
+  </section>
+
+  <!-- Постоянные -->
+  <section id="screen-const" class="screen">
+    <header class="topbar">
+      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
+      <h2 class="topbar-title">Постоянные</h2>
+      <span class="topbar-spacer"></span>
+    </header>
+    <div class="list-wrap">
+      <h1 class="list-main-title">8. Физические постоянные</h1>
+      <div id="const-list"></div>
+    </div>
+  </section>
+
+  <!-- Тест -->
+  <section id="screen-quiz" class="screen">
+    <header class="topbar">
+      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
+      <h2 class="topbar-title">Тест</h2>
+      <span class="quiz-progress" id="quiz-progress">0 / 0</span>
+    </header>
+    <div class="quiz">
+      <p class="quiz-section" id="quiz-section"></p>
+      <h2 class="quiz-question" id="quiz-question"></h2>
+      <p class="quiz-hint">Выберите правильную формулу</p>
+      <div class="answers" id="quiz-answers"></div>
+      <p class="quiz-feedback" id="quiz-feedback" hidden></p>
+    </div>
+    <div class="quiz-footer" id="quiz-footer" hidden>
+      <button type="button" class="btn btn-primary quiz-next" id="btn-next">Далее</button>
+    </div>
+  </section>
+
+  <!-- Результат -->
+  <section id="screen-result" class="screen">
+    <div class="menu result">
+      <p class="menu-eyebrow">Готово</p>
+      <h1 class="menu-title" id="result-score">0 / 0</h1>
+      <p class="menu-sub" id="result-text"></p>
+      <div class="menu-actions">
+        <button type="button" class="btn btn-primary" id="btn-retry">Пройти ещё раз</button>
+        <button type="button" class="btn btn-ghost" data-go="mode">Сменить темы</button>
+        <button type="button" class="btn btn-ghost" data-go="menu">В меню</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="formulas.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

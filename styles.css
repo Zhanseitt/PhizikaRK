@@ -1,0 +1,670 @@
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --ink: #141414;
+  --muted: #5c5c5c;
+  --line: #d8d8d4;
+  --accent: #1a5f4a;
+  --accent-ink: #ffffff;
+  --wrong: #8b2e2e;
+  --ok: #1a5f4a;
+  --shadow: 0 12px 40px rgba(20, 20, 20, 0.08);
+  --font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(26, 95, 74, 0.08), transparent 55%),
+    radial-gradient(900px 400px at 100% 0%, rgba(20, 20, 20, 0.05), transparent 50%),
+    var(--bg);
+}
+
+.screen {
+  display: none;
+  min-height: 100dvh;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* ——— Меню ——— */
+.menu {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1.5rem calc(2rem + var(--safe-bottom));
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.menu-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.menu-title {
+  margin: 0;
+  font-size: clamp(2.4rem, 9vw, 3.4rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.menu-sub {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.menu-count {
+  margin: 1.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 0.85rem;
+  padding: 1rem 1.25rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+}
+
+/* ——— Верхняя панель ——— */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(247, 247, 245, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.btn-back {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--surface);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.topbar-title {
+  margin: 0;
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.topbar-spacer {
+  width: 2.5rem;
+}
+
+.quiz-progress {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ——— Список формул (как на фото) ——— */
+.list-wrap {
+  padding: 1rem 0.75rem calc(2rem + var(--safe-bottom));
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.list-main-title {
+  margin: 0.25rem 0 1.25rem;
+  text-align: center;
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
+  font-weight: 700;
+}
+
+.section-block {
+  margin-bottom: 1.75rem;
+}
+
+.section-title {
+  margin: 0 0 0.65rem;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.formula-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  font-size: 0.82rem;
+}
+
+.formula-table thead th {
+  background: #f0f0ec;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.55rem 0.45rem;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.formula-table th:nth-child(3),
+.formula-table td:nth-child(3) {
+  text-align: center;
+}
+
+.formula-table td {
+  padding: 0.55rem 0.45rem;
+  border-bottom: 1px solid #ecece8;
+  vertical-align: middle;
+  line-height: 1.35;
+}
+
+.formula-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.col-num {
+  width: 2.2rem;
+  color: var(--muted);
+}
+
+.col-name {
+  width: 28%;
+  min-width: 7rem;
+}
+
+.col-formula {
+  width: 32%;
+}
+
+.col-notation {
+  width: 38%;
+  color: #333;
+}
+
+.formula-box {
+  display: inline-block;
+  padding: 0.15rem 0.35rem;
+  border: 1.5px solid var(--ink);
+}
+
+.formula-table .katex {
+  font-size: 1.05em;
+}
+
+/* Горизонтальный скролл таблицы на узком экране */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.5rem;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+.formula-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.formula-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: 0.9rem 1rem;
+  box-shadow: var(--shadow);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.55rem;
+}
+
+.card-num {
+  flex-shrink: 0;
+  min-width: 1.6rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+  padding-top: 0.1rem;
+}
+
+.card-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.card-formula {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.35rem 0;
+  font-size: 1.05rem;
+}
+
+.card-base {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  overflow-x: auto;
+}
+
+.card-base span {
+  margin-right: 0.25rem;
+}
+
+.card-notation {
+  margin: 0.55rem 0 0;
+  color: #333;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+/* ——— Тест ——— */
+.quiz {
+  padding: 1.25rem 1.25rem calc(2rem + var(--safe-bottom));
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.quiz-section {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.quiz-question {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.35rem, 5vw, 1.7rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.quiz-hint {
+  margin: 0.5rem 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.answer {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.answer:disabled {
+  cursor: default;
+}
+
+.answer-letter {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.55rem;
+  background: #efefeb;
+  font-weight: 700;
+}
+
+.answer-body {
+  overflow-x: auto;
+  min-width: 0;
+}
+
+.answer.correct {
+  border-color: var(--ok);
+  background: #e8f4ef;
+}
+
+.answer.wrong {
+  border-color: var(--wrong);
+  background: #f8ecec;
+}
+
+.quiz-feedback {
+  margin: 1rem 0 0;
+  font-weight: 600;
+}
+
+.quiz-feedback.ok {
+  color: var(--ok);
+}
+
+.quiz-feedback.bad {
+  color: var(--wrong);
+}
+
+.quiz-next {
+  width: 100%;
+  margin-top: 0;
+  min-height: 3.1rem;
+}
+
+.quiz-footer {
+  position: sticky;
+  bottom: 0;
+  padding: 0.75rem 1.25rem calc(0.75rem + var(--safe-bottom));
+  background: rgba(247, 247, 245, 0.94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+#screen-quiz {
+  display: none;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+#screen-quiz.active {
+  display: flex;
+}
+
+#screen-quiz .quiz {
+  flex: 1;
+}
+
+.result .menu-title {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ——— Выбор тем ——— */
+.mode-menu {
+  min-height: calc(100dvh - 3.5rem);
+  justify-content: flex-start;
+  padding-top: 2rem;
+}
+
+.topics-wrap {
+  padding: 1rem 1.25rem calc(2rem + var(--safe-bottom));
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.topics-hint {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.topic-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.topic-check {
+  cursor: pointer;
+}
+
+.topic-check input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.topic-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.topic-count {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+.topics-go {
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.topics-go:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.list-note {
+  margin: -0.5rem 0 1.25rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.formula-table-equiv .col-base {
+  text-align: center;
+  color: var(--muted);
+}
+
+.menu-actions .btn-ghost {
+  font-size: 1rem;
+}
+
+/* ——— Телефон ——— */
+@media (max-width: 720px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: flex;
+  }
+
+  html,
+  body {
+    overscroll-behavior-y: contain;
+  }
+
+  .menu {
+    padding: 1.5rem 1.15rem calc(1.5rem + var(--safe-bottom));
+    justify-content: flex-end;
+    padding-bottom: calc(2.5rem + var(--safe-bottom));
+  }
+
+  .menu-title {
+    font-size: clamp(2.1rem, 11vw, 2.8rem);
+  }
+
+  .menu-sub {
+    font-size: 1rem;
+  }
+
+  .btn {
+    min-height: 3.15rem;
+    padding: 0.95rem 1.1rem;
+    font-size: 1.05rem;
+    border-radius: 1rem;
+  }
+
+  .topbar {
+    padding: 0.65rem 0.85rem;
+    padding-top: calc(0.65rem + env(safe-area-inset-top, 0px));
+  }
+
+  .btn-back {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.25rem;
+    border-radius: 0.85rem;
+  }
+
+  .list-wrap {
+    padding: 0.85rem 0.85rem calc(2rem + var(--safe-bottom));
+  }
+
+  .list-main-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .section-title {
+    text-align: left;
+    font-size: 1rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .quiz {
+    padding: 1rem 1rem 1.25rem;
+  }
+
+  .quiz-question {
+    font-size: 1.35rem;
+  }
+
+  .answer {
+    min-height: 3.4rem;
+    padding: 0.85rem 0.9rem;
+    border-radius: 1rem;
+    gap: 0.65rem;
+  }
+
+  .answer-letter {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.7rem;
+    font-size: 1.05rem;
+  }
+
+  .answer-body {
+    font-size: 1.02rem;
+  }
+
+  .answer-body .katex {
+    font-size: 1.08em;
+  }
+
+  .topic-item {
+    min-height: 3.3rem;
+    border-radius: 1rem;
+  }
+
+  .topic-check input {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .topics-wrap {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .topics-go {
+    position: sticky;
+    bottom: calc(0.75rem + var(--safe-bottom));
+    box-shadow: 0 8px 28px rgba(20, 20, 20, 0.12);
+  }
+}
+
+@media (min-width: 721px) {
+  .mobile-only {
+    display: none !important;
+  }
+
+  .desktop-only {
+    display: block !important;
+  }
+}
