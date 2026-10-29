@@ -7,10 +7,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="description" content="Тренажёр формул по физике: тест A–D и справочник" />
+  <meta name="description" content="Тренажёр формул по физике: тест A–D, справочник и игра Собери формулу" />
   <title>Формулы по физике</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="game.css" />
 </head>
 <body>
   <!-- Главное меню -->
@@ -18,9 +19,10 @@
     <div class="menu">
       <p class="menu-eyebrow">Справочник и тест</p>
       <h1 class="menu-title">Формулы<br />по физике</h1>
-      <p class="menu-sub">Вопросы A–D со случайным порядком ответов. Можно выбрать темы.</p>
+      <p class="menu-sub">Тест A–D по всем формулам и отдельная игра «Собери формулу» по разделам 8–12.</p>
       <div class="menu-actions">
-        <button type="button" class="btn btn-primary" id="btn-start">Начать</button>
+        <button type="button" class="btn btn-primary" id="btn-start">Начать тест A–D</button>
+        <button type="button" class="btn btn-primary" id="btn-builder">Собери формулу</button>
         <button type="button" class="btn btn-ghost" id="btn-list">Все формулы</button>
         <button type="button" class="btn btn-ghost" id="btn-equiv">Эквивалентные формулы</button>
         <button type="button" class="btn btn-ghost" id="btn-const">Постоянные</button>
@@ -29,7 +31,7 @@
     </div>
   </section>
 
-  <!-- Режим выбора тем -->
+  <!-- Выбор режима обычного теста -->
   <section id="screen-mode" class="screen">
     <header class="topbar">
       <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
@@ -45,7 +47,7 @@
     </div>
   </section>
 
-  <!-- Выбор тем -->
+  <!-- Выбор тем для теста A–D -->
   <section id="screen-topics" class="screen">
     <header class="topbar">
       <button type="button" class="btn-back" data-go="mode" aria-label="Назад">←</button>
@@ -61,79 +63,73 @@
 
   <!-- Список основных формул -->
   <section id="screen-list" class="screen">
-    <header class="topbar">
-      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
-      <h2 class="topbar-title">Все формулы</h2>
-      <span class="topbar-spacer"></span>
-    </header>
-    <div class="list-wrap">
-      <h1 class="list-main-title">Общая таблица формул по физике</h1>
-      <div id="formulas-list"></div>
-    </div>
+    <header class="topbar"><button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button><h2 class="topbar-title">Все формулы</h2><span class="topbar-spacer"></span></header>
+    <div class="list-wrap"><h1 class="list-main-title">Общая таблица формул по физике</h1><div id="formulas-list"></div></div>
   </section>
-
   <!-- Эквиваленты -->
   <section id="screen-equiv" class="screen">
-    <header class="topbar">
-      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
-      <h2 class="topbar-title">Эквиваленты</h2>
-      <span class="topbar-spacer"></span>
-    </header>
-    <div class="list-wrap">
-      <h1 class="list-main-title">Равнозначные преобразования</h1>
-      <p class="list-note">Формулы вида «из F = ma → a = F/m», которые убрали из основных 102, чтобы не дублировать.</p>
-      <div id="equiv-list"></div>
-    </div>
+    <header class="topbar"><button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button><h2 class="topbar-title">Эквиваленты</h2><span class="topbar-spacer"></span></header>
+    <div class="list-wrap"><h1 class="list-main-title">Равнозначные преобразования</h1><p class="list-note">Формулы вида «из F = ma → a = F/m» в отдельном просмотре.</p><div id="equiv-list"></div></div>
   </section>
-
   <!-- Постоянные -->
   <section id="screen-const" class="screen">
-    <header class="topbar">
-      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
-      <h2 class="topbar-title">Постоянные</h2>
-      <span class="topbar-spacer"></span>
-    </header>
-    <div class="list-wrap">
-      <h1 class="list-main-title">8. Физические постоянные</h1>
-      <div id="const-list"></div>
-    </div>
+    <header class="topbar"><button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button><h2 class="topbar-title">Постоянные</h2><span class="topbar-spacer"></span></header>
+    <div class="list-wrap"><h1 class="list-main-title">Физические постоянные</h1><div id="const-list"></div></div>
   </section>
-
-  <!-- Тест -->
+  <!-- Тест A–D -->
   <section id="screen-quiz" class="screen">
-    <header class="topbar">
-      <button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button>
-      <h2 class="topbar-title">Тест</h2>
-      <span class="quiz-progress" id="quiz-progress">0 / 0</span>
-    </header>
-    <div class="quiz">
-      <p class="quiz-section" id="quiz-section"></p>
-      <h2 class="quiz-question" id="quiz-question"></h2>
-      <p class="quiz-hint">Выберите правильную формулу</p>
-      <div class="answers" id="quiz-answers"></div>
-      <p class="quiz-feedback" id="quiz-feedback" hidden></p>
-    </div>
-    <div class="quiz-footer" id="quiz-footer" hidden>
-      <button type="button" class="btn btn-primary quiz-next" id="btn-next">Далее</button>
-    </div>
+    <header class="topbar"><button type="button" class="btn-back" data-go="menu" aria-label="Назад">←</button><h2 class="topbar-title">Тест</h2><span class="quiz-progress" id="quiz-progress">0 / 0</span></header>
+    <div class="quiz"><p class="quiz-section" id="quiz-section"></p><h2 class="quiz-question" id="quiz-question"></h2><p class="quiz-hint">Выберите правильную формулу</p><div class="answers" id="quiz-answers"></div><p class="quiz-feedback" id="quiz-feedback" hidden></p></div>
+    <div class="quiz-footer" id="quiz-footer" hidden><button type="button" class="btn btn-primary quiz-next" id="btn-next">Далее</button></div>
   </section>
-
-  <!-- Результат -->
+  <!-- Результат обычного теста -->
   <section id="screen-result" class="screen">
-    <div class="menu result">
-      <p class="menu-eyebrow">Готово</p>
-      <h1 class="menu-title" id="result-score">0 / 0</h1>
-      <p class="menu-sub" id="result-text"></p>
-      <div class="menu-actions">
-        <button type="button" class="btn btn-primary" id="btn-retry">Пройти ещё раз</button>
-        <button type="button" class="btn btn-ghost" data-go="mode">Сменить темы</button>
-        <button type="button" class="btn btn-ghost" data-go="menu">В меню</button>
-      </div>
+    <div class="menu result"><p class="menu-eyebrow">Готово</p><h1 class="menu-title" id="result-score">0 / 0</h1><p class="menu-sub" id="result-text"></p><div class="menu-actions"><button type="button" class="btn btn-primary" id="btn-retry">Пройти ещё раз</button><button type="button" class="btn btn-ghost" data-go="mode">Сменить темы</button><button type="button" class="btn btn-ghost" data-go="menu">В меню</button></div></div>
+  </section>
+
+  <!-- НОВОЕ: выбор тем игры «Собери формулу» -->
+  <section id="screen-builder-topics" class="screen">
+    <header class="topbar"><button type="button" class="btn-back" data-builder-back="screen-menu" aria-label="Назад">←</button><h2 class="topbar-title">Собери формулу</h2><span class="topbar-spacer"></span></header>
+    <div class="builder-wrap">
+      <h1 class="builder-heading">Выбери темы</h1>
+      <p class="builder-subtext">Только разделы 8–12: МКТ, распределения, термодинамика, теплоёмкость и физические постоянные. Выбери одну или несколько тем — символы перемешаются.</p>
+      <div class="builder-topic-actions"><button type="button" class="btn btn-ghost" id="builder-select-all">Выбрать все</button><button type="button" class="btn btn-ghost" id="builder-select-none">Снять выбор</button></div>
+      <div id="builder-topic-list" class="builder-topic-list"></div>
+      <p class="builder-available" id="builder-available"></p>
+      <button type="button" class="btn btn-primary builder-wide" id="builder-play">Начать игру</button>
     </div>
   </section>
 
+  <!-- НОВОЕ: сама игра, слотами прямо внутри формулы KaTeX -->
+  <section id="screen-builder" class="screen">
+    <header class="topbar"><button type="button" class="btn-back" data-builder-back="screen-menu" aria-label="В меню">←</button><h2 class="topbar-title">Собери формулу</h2><span class="quiz-progress" id="builder-progress">1 / 1</span></header>
+    <main class="builder-wrap builder-game">
+      <div class="builder-status"><span id="builder-section"></span><span id="builder-score">Верно: 0</span></div>
+      <h2 id="builder-name" class="builder-heading"></h2>
+      <p class="builder-subtext">Перетащи символы в пустые прямоугольники. На телефоне можно нажать на символ, чтобы заполнить следующее место.</p>
+      <div class="builder-math-card"><div id="builder-formula" class="builder-formula" aria-label="Формула с пропусками"></div></div>
+      <h3 class="builder-pool-heading">Символы</h3>
+      <div id="builder-tokens" class="builder-tokens"></div>
+      <p id="builder-feedback" class="builder-feedback" hidden></p>
+      <div id="builder-answer" class="builder-answer" hidden></div>
+      <div class="builder-actions">
+        <button type="button" class="btn btn-primary builder-wide" id="builder-check">Проверить</button>
+        <div class="builder-actions-row">
+          <button type="button" class="btn btn-ghost" id="builder-clear">Очистить</button>
+          <button type="button" class="btn btn-ghost" id="builder-reveal">Показать формулу</button>
+        </div>
+        <button type="button" class="btn btn-ghost builder-wide" id="builder-skip">Пропустить</button>
+        <button type="button" class="btn btn-primary builder-wide" id="builder-next" hidden>Следующая</button>
+      </div>
+    </main>
+  </section>
+  <!-- НОВОЕ: результат игры -->
+  <section id="screen-builder-result" class="screen">
+    <div class="menu result"><p class="menu-eyebrow">Игра окончена</p><h1 class="menu-title" id="builder-final-score">0 / 0</h1><p class="menu-sub" id="builder-final-text"></p><div class="menu-actions"><button type="button" class="btn btn-primary" id="builder-again">Сыграть ещё раз</button><button type="button" class="btn btn-ghost" data-builder-back="screen-builder-topics">Сменить темы</button><button type="button" class="btn btn-ghost" data-builder-back="screen-menu">В меню</button></div></div>
+  </section>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script src="formulas.js"></script>
   <script src="app.js"></script>
+  <script src="game.js"></script>
 </body>
 </html>
