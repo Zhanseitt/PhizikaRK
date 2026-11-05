@@ -140,7 +140,7 @@
       show('result');
     }
     function init(){
-      $('menu-count').textContent=`${formulaList.length} формул · ${equivalents.length} эквивалентов`;
+      $('menu-count').textContent=`${formulaList.length} формул · ${equivalents.length} эквивалентов · версия 06.11.2026`;
       $('btn-start').addEventListener('click',()=>show('mode'));
       $('btn-list').addEventListener('click',()=>{listScreen('formulas-list',formulaList);show('list');});
       $('btn-equiv').addEventListener('click',()=>{listScreen('equiv-list',equivalents);show('equiv');});

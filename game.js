@@ -1,10 +1,10 @@
-/* Отдельный режим «Собери формулу»: только темы 8–12 (№103–148). */
+/* Отдельный режим «Собери формулу»: только темы 8–12 (№103–154). */
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
   const screens = ['screen-builder-topics', 'screen-builder', 'screen-builder-result'];
   const GAME_FIRST_ID = 103;
-  const GAME_LAST_ID = 148;
+  const GAME_LAST_ID = 154;
   const GAME_SECTIONS = new Set([8, 9, 10, 11, 12]);
   let questions = [], current = 0, score = 0, completed = false, revealed = false;
   let placements = [], tokenPool = [], dragged = null, selected = null, checked = false;
